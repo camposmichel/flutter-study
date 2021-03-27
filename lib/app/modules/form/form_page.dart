@@ -1,3 +1,4 @@
+import 'package:appcontacts/app/models/contacts_model.dart';
 import 'package:appcontacts/app/modules/form/form_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -5,12 +6,20 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class FormPage extends StatefulWidget {
   final String title;
-  const FormPage({Key? key, this.title = "Contact Form"}) : super(key: key);
+  final ContactModel? contact;
+  const FormPage({Key? key, this.title = "Contact Form", this.contact})
+      : super(key: key);
   @override
   FormPageState createState() => FormPageState();
 }
 
 class FormPageState extends ModularState<FormPage, FormStore> {
+  @override
+  void initState() {
+    super.initState();
+    store.fetchContact(widget.contact);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,10 +44,6 @@ class FormPageState extends ModularState<FormPage, FormStore> {
       child: ListView(
         children: [
           TextFormField(
-            controller: store.idController,
-            decoration: InputDecoration(labelText: 'ID'),
-          ),
-          TextFormField(
             controller: store.nameController,
             decoration: InputDecoration(labelText: 'Nome'),
           ),
@@ -56,8 +61,7 @@ class FormPageState extends ModularState<FormPage, FormStore> {
           ElevatedButton(
             child: Text('Confirmar'),
             onPressed: () {
-              store.createContact();
-              Modular.to.pop();
+              store.saveContact().then((value) => {Modular.to.pop()});
             },
           )
         ],

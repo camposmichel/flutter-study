@@ -20,9 +20,16 @@ class ContactsRepository extends Disposable {
     return contacts;
   }
 
-  Future<ContactModel> createContact(ContactModel contact) async {
-    final Response response =
-        await _dio.post('/contacts', data: contact.toJson());
+  Future<ContactModel> saveContact(ContactModel contact) async {
+    Response response;
+
+    if (contact.id == '') {
+      response = await _dio.post('/contacts', data: contact.toJson());
+    } else {
+      response =
+          await _dio.put('/contacts/${contact.id}', data: contact.toJson());
+    }
+
     return ContactModel.fromJson(response.data);
   }
 

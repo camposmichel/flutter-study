@@ -14,11 +14,18 @@ class ContactsStore extends MobXStore<Exception, List<ContactModel>> {
     setLoading(false);
   }
 
-  Future<void> createContact(ContactModel contact) async {
+  Future<ContactModel> saveContact(ContactModel contact) async {
     setLoading(true);
-    ContactModel response = await this._repository.createContact(contact);
-    update([...state, response]);
+    ContactModel response = await this._repository.saveContact(contact);
+    if (contact.id == '') {
+      update([...state, response]);
+    } else {
+      int index = state.indexWhere((element) => element.id == response.id);
+      state[index] = response;
+      update([...state]);
+    }
     setLoading(false);
+    return response;
   }
 
   Future<void> deleteContact(String id) async {

@@ -11,6 +11,7 @@ class FormModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute(Modular.initialRoute, child: (_, args) => FormPage()),
+    ChildRoute(Modular.initialRoute,
+        child: (_, args) => FormPage(contact: args.data)),
   ];
 }
