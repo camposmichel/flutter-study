@@ -6,7 +6,7 @@ import 'list_store.dart';
 
 class ListPage extends StatefulWidget {
   final String title;
-  const ListPage({Key? key, this.title = "ListPage"}) : super(key: key);
+  const ListPage({Key? key, this.title = "Contact List"}) : super(key: key);
   @override
   ListPageState createState() => ListPageState();
 }
@@ -25,7 +25,7 @@ class ListPageState extends ModularState<ListPage, ListStore> {
         title: Text(widget.title),
       ),
       body: Observer(builder: (BuildContext _) {
-        final contactList = store.state;
+        final contactList = store.contactList;
 
         if (store.isLoading) {
           return Center(
@@ -36,7 +36,22 @@ class ListPageState extends ModularState<ListPage, ListStore> {
         return ListView.builder(
           itemCount: contactList.length,
           itemBuilder: (context, index) {
-            return ListTile(title: Text(contactList[index].name));
+            return ListTile(
+              title: Text(contactList[index].name),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(contactList[index].phone),
+                  Text(contactList[index].description ?? ''),
+                ],
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  this._confirmDelete(contactList[index].id);
+                },
+              ),
+            );
           },
         );
       }),
@@ -46,6 +61,34 @@ class ListPageState extends ModularState<ListPage, ListStore> {
           Modular.to.pushNamed('/form');
         },
       ),
+    );
+  }
+
+  Future<void> _confirmDelete(String id) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Deletar'),
+          content: Text('Voçê tem certeza que deseja deletar esse usuário?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Não'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Sim'),
+              onPressed: () {
+                store.deleteContact(id);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

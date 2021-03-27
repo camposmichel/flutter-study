@@ -14,10 +14,22 @@ class FormStore extends MobXStore<Exception, ContactModel> {
   FormStore(this._contactsStore)
       : super(ContactModel(id: '', name: '', phone: ''));
 
-  createContact(ContactModel contact) {
+  createContact() async {
     setLoading(true);
-    update(contact);
-    this._contactsStore.createContact(state);
+
+    ContactModel newContact = this._getNewContact();
+    update(newContact);
+    await this._contactsStore.createContact(state);
+
     setLoading(false);
+  }
+
+  ContactModel _getNewContact() {
+    return new ContactModel(
+      id: this.idController.text,
+      name: this.nameController.text,
+      phone: this.phoneController.text,
+      description: this.descriptionController.text,
+    );
   }
 }
