@@ -1,0 +1,23 @@
+name: lembre
+description: Lembre App - Todo list
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_modular: ^3.0.2+1
+  # flutter_triple: ^1.0.5+1
+  mobx: 2.0.0-nullsafety.2
+  flutter_mobx: ^2.0.0-nullsafety.1
+  mobx_triple: ^1.0.0
+  dio: ^4.0.0-prev1
+  firebase_core: "^1.0.2"
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_modular_test: ^1.0.0
+flutter:
+  uses-material-design: true
