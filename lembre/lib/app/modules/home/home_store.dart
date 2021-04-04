@@ -1,7 +1,17 @@
+import 'package:lembre/app/models/todo_model.dart';
+import 'package:lembre/app/repositories/todo_repository.dart';
+import 'package:mobx/mobx.dart';
 import 'package:mobx_triple/mobx_triple.dart';
 
 class HomeStore extends MobXStore<Exception, int> {
-  HomeStore() : super(0);
+  late final TodoRepository _todoRepository;
+
+  @observable
+  late ObservableStream<List<TodoModel>> todoList;
+
+  HomeStore(this._todoRepository) : super(0) {
+    this.getList();
+  }
 
   Future<void> increment() async {
     setLoading(true);
@@ -21,5 +31,21 @@ class HomeStore extends MobXStore<Exception, int> {
     }
 
     setLoading(false);
+  }
+
+  @action
+  getList() {
+    this.todoList = this._todoRepository.get().asObservable();
+    print(this.todoList);
+  }
+
+  @action
+  void save(TodoModel model) {
+    this._todoRepository.save(model);
+  }
+
+  @action
+  void delete(TodoModel model) {
+    this._todoRepository.delete(model);
   }
 }
