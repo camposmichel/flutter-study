@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:lembre/stores/counter_store.dart';
+import 'package:lembre/stores/counter/counter_store.dart';
 
 part 'home_controller.g.dart';
 
