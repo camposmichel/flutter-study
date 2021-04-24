@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "999329437192",
+    "project_id": "lembre-7a113",
+    "storage_bucket": "lembre-7a113.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999329437192:android:bfcfbe306015639ea3e3bd",
+        "android_client_info": {
+          "package_name": "br.miccss.lembre"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999329437192-lpcmslmmiur0olalr1n4ufbi9jqh25h7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW5EsGhkh0iHkFX9yYTrgkm8Mefof9MsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999329437192-lpcmslmmiur0olalr1n4ufbi9jqh25h7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
