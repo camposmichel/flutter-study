@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:lembre/models/todo_model.dart';
 import 'package:lembre/pages/home/home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,22 +21,33 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Observer(builder: (_) {
-              final value = this.homeController.value;
-              return Text(
-                value.toString(),
-                style: Theme.of(context).textTheme.headline4,
+      body: Observer(
+        builder: (BuildContext _) {
+          List<TodoModel>? todoList = homeController.todoList?.data;
+          if (todoList == null) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: todoList.length,
+            itemBuilder: (context, index) {
+              final TodoModel item = todoList[index];
+              return ListTile(
+                title: Text(item.title.toString()),
+                leading: Checkbox(
+                  onChanged: (value) {},
+                  value: item.check,
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {},
+                ),
               );
-            }),
-          ],
-        ),
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: this.homeController.increment,
